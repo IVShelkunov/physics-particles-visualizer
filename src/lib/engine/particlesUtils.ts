@@ -21,7 +21,7 @@ export const generateParticles = (count: number, canvasWidth: number, canvasHeig
     return particles;
 }
 
-export const updateParticlePhisics = (
+export const updateParticlePhysics = (
     particle: IParticle,
     width: number,
     height: number,
@@ -41,8 +41,37 @@ export const updateParticlePhisics = (
     if (particle.y > height - particle.radius) {
         particle.vy = - Math.abs(particle.vy);
     }
-}
 
+}
+export const checkParticlesCollision = (p1: IParticle, p2: IParticle): boolean => {
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const distanceQuad = dx * dx + dy * dy;
+    const isCollision = distanceQuad < (p1.radius + p2.radius) * (p1.radius + p2.radius);
+    return isCollision;
+}
+export const collisionResolveParticles = (p1: IParticle, p2: IParticle) => {
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const overlap = p1.radius + p2.radius - distance;
+    if (distance === 0) return;
+    const nx = dx / distance;
+    const ny = dy / distance;
+    p1.x -= nx * (overlap / 2);
+    p1.y -= ny * (overlap / 2);
+    p2.x += nx * (overlap / 2);
+    p2.y += ny * (overlap / 2);
+    const kx = p1.vx - p2.vx;
+    const ky = p1.vy - p2.vy;
+    const p = kx * nx + ky * ny;
+    if (p < 0) return;
+    const impulse = p;
+    p1.vx -= impulse * nx;
+    p1.vy -= impulse * ny;
+    p2.vx = impulse * nx;
+    p2.vy = impulse * ny;
+}
 export const drawParticle = (
     ctx: CanvasRenderingContext2D,
     particle: IParticle

@@ -1,9 +1,11 @@
 "use client";
 
 import {
+  checkParticlesCollision,
+  collisionResolveParticles,
   drawParticle,
   generateParticles,
-  updateParticlePhisics,
+  updateParticlePhysics,
 } from "@/lib/engine/particlesUtils";
 import { IParticle } from "@/lib/engine/types";
 import { useEffect, useRef } from "react";
@@ -18,7 +20,7 @@ export default function CanvasContainer() {
     if (!ctx) return;
     const width = canvas.width;
     const height = canvas.height;
-    particlesRef.current = generateParticles(500, width, height);
+    particlesRef.current = generateParticles(50, width, height);
     let animationId: number;
     let lastTime: number = 0;
     const loop = (time: number) => {
@@ -28,8 +30,22 @@ export default function CanvasContainer() {
       ctx.fillStyle = "rgba(15, 23, 42, 0.25)";
       ctx.fillRect(0, 0, width, height);
       particlesRef.current.forEach((particle) => {
-        updateParticlePhisics(particle, width, height, dt);
+        updateParticlePhysics(particle, width, height, dt);
       });
+      for (let i = 0; i < particlesRef.current.length; i++) {
+        for (let j = i + 1; j < particlesRef.current.length; j++) {
+          const isCollision = checkParticlesCollision(
+            particlesRef.current[i],
+            particlesRef.current[j],
+          );
+          if (isCollision) {
+            collisionResolveParticles(
+              particlesRef.current[i],
+              particlesRef.current[j],
+            );
+          }
+        }
+      }
       particlesRef.current.forEach((particle) => {
         drawParticle(ctx, particle);
       });
