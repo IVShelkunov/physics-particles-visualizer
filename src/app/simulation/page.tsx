@@ -1,10 +1,14 @@
 "use client";
+import SimulationManager from "@/components/shared/SimulationManager";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const CanvasContainer = dynamic(() => import("@/components/CanvasContainer"), {
-  ssr: false,
-});
+const CanvasContainer = dynamic(
+  () => import("@/components/shared/CanvasContainer"),
+  {
+    ssr: false,
+  },
+);
 
 export default function SimulationPage() {
   return (
@@ -18,11 +22,7 @@ export default function SimulationPage() {
         </Link>
         <h1 className="text-xl font-bold">Simulation window</h1>
       </header>
-
-      <div className="flex flex-1 items-center justify-center my-6">
-        <CanvasContainer />
-      </div>
-
+      <SimulationManager />
       <footer className="text-sm text-slate-500">Next.js + Canvas API</footer>
     </main>
   );
