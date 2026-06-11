@@ -23,7 +23,7 @@ export default function ControlWidget({
       <button
         onClick={() => onTogglePaused(!isPaused)}
         className={cn(
-          "w-full py-3 px-4 rounded-xl font-bold tracking-wider uppercase text-sm border transition-all duration-300 active:scale-95",
+          "cursor-pointer w-full py-3 px-4 rounded-xl font-bold tracking-wider uppercase text-sm border transition-all duration-300 active:scale-95",
           isPaused
             ? "bg-emerald-600/20 border-emerald-500/40 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:bg-emerald-600/30 hover:border-emerald-500/60"
             : "bg-indigo-600/20 border-indigo-500/40 text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.2)] hover:bg-indigo-600/30 hover:border-indigo-500/60",
