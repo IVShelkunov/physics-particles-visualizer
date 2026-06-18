@@ -7,7 +7,12 @@ import {
   generateParticles,
   updateParticlePhysics,
 } from "@/lib/engine/particlesUtils";
-import { drawPerformanceMonitor } from "@/lib/engine/performanceMonitorUtils";
+import {
+  drawPerformanceMonitor,
+  drawQuadTree,
+} from "@/lib/engine/performanceMonitorUtils";
+import { QuadTree } from "@/lib/engine/QuadTree";
+import { Rectangle } from "@/lib/engine/Rectangle";
 import { IParticle } from "@/lib/engine/types";
 import { useEffect, useRef } from "react";
 interface CanvasContainerProps {
@@ -58,26 +63,26 @@ export default function CanvasContainer({
       ctx.fillRect(0, 0, width, height);
       const start = performance.now();
       const fps = 1 / dt;
-      //Update
+      const rect = new Rectangle(width / 2, height / 2, width / 2, height / 2);
+      const qTree = new QuadTree(rect, 4);
       particlesRef.current.forEach((particle) => {
-        updateParticlePhysics(particle, width, height, dt);
+        qTree.insert(particle);
       });
-      if (isCollidingRef.current) {
-        for (let i = 0; i < particlesRef.current.length; i++) {
-          for (let j = i + 1; j < particlesRef.current.length; j++) {
-            const isCollision = checkParticlesCollision(
-              particlesRef.current[i],
-              particlesRef.current[j],
-            );
-            if (isCollision) {
-              collisionResolveParticles(
-                particlesRef.current[i],
-                particlesRef.current[j],
-              );
+      //Update
+      particlesRef.current.forEach((p1) => {
+        const range = new Rectangle(p1.x, p1.y, p1.radius * 2, p1.radius * 2);
+        const closeParticles = qTree.query(range);
+        if (isCollidingRef.current) {
+          for (const p2 of closeParticles) {
+            if (p1 !== p2 && checkParticlesCollision(p1, p2)) {
+              collisionResolveParticles(p1, p2);
             }
           }
         }
-      }
+      });
+      particlesRef.current.forEach((particle) => {
+        updateParticlePhysics(particle, width, height, dt);
+      });
       const end = performance.now();
       const calcTime = end - start;
       updateTimer += dt;
@@ -96,6 +101,7 @@ export default function CanvasContainer({
         updateTimer = 0;
       }
       //Draw
+      drawQuadTree(ctx, qTree);
       particlesRef.current.forEach((particle) => {
         drawParticle(ctx, particle);
       });
