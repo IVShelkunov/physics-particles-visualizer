@@ -9,6 +9,8 @@ interface ControlWidgetProps {
   onChangeParticleCount: (value: number) => void;
   isColliding: boolean;
   onToggleColliding: (value: boolean) => void;
+  isGridVisible: boolean;
+  onToggleGridVisible: (value: boolean) => void;
 }
 export default function ControlWidget({
   isPaused,
@@ -17,6 +19,8 @@ export default function ControlWidget({
   onChangeParticleCount,
   isColliding,
   onToggleColliding,
+  isGridVisible,
+  onToggleGridVisible,
 }: ControlWidgetProps) {
   return (
     <section className="flex flex-col w-full lg:w-72 p-6 bg-slate-950/80 backdrop-blur-md border border-slate-800 rounded-2xl gap-6 shadow-[0_0_30px_rgba(99,102,241,0.1)]">
@@ -69,6 +73,24 @@ export default function ControlWidget({
           className="text-xs font-semibold text-slate-400 uppercase tracking-widest cursor-pointer group-hover:text-slate-300 transition-colors select-none"
         >
           Enable collisions
+        </label>
+      </div>
+      <div className="flex items-center gap-3 cursor-pointer group">
+        <div className="relative flex items-center">
+          <input
+            id="onCollission"
+            type="checkbox"
+            checked={isGridVisible}
+            onChange={(e) => onToggleGridVisible(e.target.checked)}
+            className="w-4 h-4 rounded border-slate-800 bg-slate-900 text-indigo-600 focus:ring-indigo-500/30 focus:ring-offset-0 cursor-pointer accent-indigo-500"
+          />
+        </div>
+
+        <label
+          htmlFor="onCollision"
+          className="text-xs font-semibold text-slate-400 uppercase tracking-widest cursor-pointer group-hover:text-slate-300 transition-colors select-none"
+        >
+          Show grid
         </label>
       </div>
     </section>
