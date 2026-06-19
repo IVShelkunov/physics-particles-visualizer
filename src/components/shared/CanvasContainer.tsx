@@ -19,22 +19,28 @@ interface CanvasContainerProps {
   isPaused: boolean;
   particleCount: number;
   isColliding: boolean;
+  isGridVisible: boolean;
 }
 export default function CanvasContainer({
   isPaused,
   particleCount,
   isColliding,
+  isGridVisible,
 }: CanvasContainerProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const particlesRef = useRef<IParticle[]>([]);
   const isPausedRef = useRef(false);
   const isCollidingRef = useRef(true);
+  const isGridVisibleRef = useRef(true);
   useEffect(() => {
     isPausedRef.current = isPaused;
   }, [isPaused]);
   useEffect(() => {
     isCollidingRef.current = isColliding;
   }, [isColliding]);
+  useEffect(() => {
+    isGridVisibleRef.current = isGridVisible;
+  }, [isGridVisible]);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -101,7 +107,9 @@ export default function CanvasContainer({
         updateTimer = 0;
       }
       //Draw
-      drawQuadTree(ctx, qTree);
+      if (isGridVisibleRef.current) {
+        drawQuadTree(ctx, qTree);
+      }
       particlesRef.current.forEach((particle) => {
         drawParticle(ctx, particle);
       });
