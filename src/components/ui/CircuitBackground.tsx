@@ -41,7 +41,6 @@ export default function CircuitBackground() {
       lines.forEach((line) => {
         drawLine(ctx, line, width, height);
       });
-      console.log(lines);
       animationId = requestAnimationFrame(loop);
     };
     animationId = requestAnimationFrame(loop);

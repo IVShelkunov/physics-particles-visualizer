@@ -18,7 +18,7 @@ export const createLine = (width: number, height: number): ILine => {
     switch (side) {
         case 'top':
             x = centerX + (Math.random() - 0.5) * 600;
-            y = centerY - 120;
+            y = centerY - 130;
             directions = [
                 { vx: 0, vy: -speed },
                 { vx: diagSpeed, vy: -diagSpeed },
@@ -29,7 +29,7 @@ export const createLine = (width: number, height: number): ILine => {
             break;
         case 'left':
             x = centerX - 300;
-            y = centerY + (Math.random() - 0.5) * 240;
+            y = centerY + (Math.random() - 0.5) * 260;
             directions = [
                 { vx: 0, vy: -speed },
                 { vx: -diagSpeed, vy: -diagSpeed },
@@ -40,7 +40,7 @@ export const createLine = (width: number, height: number): ILine => {
             break;
         case 'right':
             x = centerX + 300;
-            y = centerY + (Math.random() - 0.5) * 240;
+            y = centerY + (Math.random() - 0.5) * 260;
             directions = [
                 { vx: 0, vy: -speed },
                 { vx: diagSpeed, vy: -diagSpeed },
@@ -51,7 +51,7 @@ export const createLine = (width: number, height: number): ILine => {
             break;
         case 'down':
             x = centerX + (Math.random() - 0.5) * 600;
-            y = centerY + 120;
+            y = centerY + 130;
             directions = [
                 { vx: -speed, vy: 0 },
                 { vx: -diagSpeed, vy: diagSpeed },
