@@ -8,7 +8,7 @@ export default function ScoreCard({ score }: ScoreCardProps) {
   return (
     <div
       className={cn(
-        "p-4 rounded-xl border",
+        "flex flex-col gap-1  items-start justify-between md:p-4 p-2 rounded-xl border",
         score.color === "red"
           ? " border-red-500/20 bg-red-950/10"
           : "border-emerald-500/20 bg-emerald-950/10",
@@ -24,7 +24,7 @@ export default function ScoreCard({ score }: ScoreCardProps) {
       </div>
       <div
         className={cn(
-          "text-2xl font-bold font-mono",
+          "md:text-2xl text-xl font-bold font-mono",
           score.color === "red" ? "text-red-500" : "text-emerald-400",
         )}
       >
