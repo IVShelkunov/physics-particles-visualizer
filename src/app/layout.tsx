@@ -10,6 +10,12 @@ export default function RootLayout({
     title: "Physics Particles Visualizer",
     description:
       "High-performance 2D physics simulation optimized with Quadtree algorithm.",
+    openGraph: {
+      title: "Physics Particles Visualizer",
+      description:
+        "High-performance 2D physics simulation optimized with Quadtree algorithm.",
+      type: "website",
+    },
   };
   return (
     <html lang="en">
