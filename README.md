@@ -47,7 +47,7 @@ By introducing a **Quadtree**, we recursively divide the 2D canvas into four qua
 * **Procedural Circuit Background:** Beautiful generative circuit board traces flowing from a central CPU node, equipped with neon cyan glow effects and custom Base64 SVG noise texture.
 
 
-![Simulation Workspace and Controls](https://github.com/user-attachments/assets/064b0820-4a92-429c-b47c-d94142b3c1ec)
+![Simulation Workspace and Controls](https://github.com/user-attachments/assets/1056e177-6217-4c16-b9ef-5fa5d8db7b66)
 
 ---
 
